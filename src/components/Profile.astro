@@ -1,6 +1,5 @@
 ---
-import SocialLinks from "./SocialLinks.astro";
-import { profile, links } from "../data/portfolio.js";
+import { profile } from "../data/portfolio.js";
 ---
 
 <header class="profile container">
@@ -23,7 +22,6 @@ import { profile, links } from "../data/portfolio.js";
     </p>
     <h1>{profile.name}</h1>
     {profile.bio && <p class="bio">{profile.bio}</p>}
-    <SocialLinks links={links} />
   </div>
 </header>
 
