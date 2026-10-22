@@ -1,0 +1,39 @@
+---
+import "../styles/global.css";
+import * as portfolio from "../data/portfolio.js";
+import { validatePortfolio } from "../data/validate.js";
+
+const { siteSettings } = portfolio;
+validatePortfolio(portfolio);
+
+const { title = siteSettings.title, description = siteSettings.description, path = "/" } = Astro.props;
+const domain = siteSettings.domain?.replace(/\/$/, "");
+const pageUrl = domain ? `${domain}${path}` : null;
+const socialImage = siteSettings.socialImage && domain ? `${domain}${siteSettings.socialImage}` : null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={siteSettings.themeColor} />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {pageUrl && <link rel="canonical" href={pageUrl} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {pageUrl && <meta property="og:url" content={pageUrl} />}
+    {socialImage && <meta property="og:image" content={socialImage} />}
+    <meta name="twitter:card" content={socialImage ? "summary_large_image" : "summary"} />
+  </head>
+  <body>
+    <div id="top"></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <slot />
+  </body>
+</html>

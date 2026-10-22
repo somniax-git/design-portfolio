@@ -1,0 +1,65 @@
+---
+// One page per portfolio, generated from `portfolios` in portfolio.js (e.g. /design/).
+import Layout from "../layouts/Layout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import { portfolios, profile } from "../data/portfolio.js";
+
+export function getStaticPaths() {
+  return portfolios.map((portfolio) => ({
+    params: { portfolio: portfolio.slug },
+    props: { portfolio },
+  }));
+}
+
+const { portfolio } = Astro.props;
+const count = portfolio.projects?.length ?? 0;
+---
+
+<Layout
+  title={`${portfolio.title} — ${profile.name}`}
+  description={portfolio.description}
+  path={`/${portfolio.slug}/`}
+>
+  <SiteHeader />
+  <main id="main" class="container">
+    <div class="intro">
+      <h1>{portfolio.title}</h1>
+      {portfolio.description && <p class="description">{portfolio.description}</p>}
+      <p class="count">{count} {count === 1 ? "work" : "works"}</p>
+    </div>
+    <ProjectGrid projects={portfolio.projects} />
+  </main>
+  <SiteFooter />
+</Layout>
+
+<style>
+  main {
+    padding-bottom: var(--space-8);
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--space-3);
+    max-width: 40rem;
+    padding-block: var(--space-7) var(--space-6);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .description {
+    font-size: clamp(1.0625rem, 2.2vw, 1.25rem);
+    color: var(--color-text-muted);
+  }
+
+  .count {
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+</style>

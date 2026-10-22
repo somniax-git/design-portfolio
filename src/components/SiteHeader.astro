@@ -1,0 +1,56 @@
+---
+// Compact header for portfolio pages, linking back to the home page.
+import { profile } from "../data/portfolio.js";
+---
+
+<header class="site-header container">
+  <a class="home" href="/">
+    {profile.avatar && <img src={profile.avatar} alt="" width="40" height="40" />}
+    <span>{profile.name}</span>
+  </a>
+  <a class="back" href="/"><span aria-hidden="true">←</span> All portfolios</a>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 44px;
+    text-decoration: none;
+  }
+
+  .home {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--color-surface);
+  }
+
+  .back {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    text-underline-offset: 0.2em;
+  }
+
+  .back:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+</style>

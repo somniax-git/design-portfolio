@@ -1,0 +1,91 @@
+---
+import SocialLinks from "./SocialLinks.astro";
+import { profile, links } from "../data/portfolio.js";
+---
+
+<header class="profile container">
+  {
+    profile.avatar && (
+      <img
+        class="avatar"
+        src={profile.avatar}
+        alt={`Portrait of ${profile.name}`}
+        width="400"
+        height="400"
+        fetchpriority="high"
+      />
+    )
+  }
+  <div class="intro">
+    <p class="eyebrow">
+      {profile.title}
+      {profile.location && <span class="location"> · {profile.location}</span>}
+    </p>
+    <h1>{profile.name}</h1>
+    {profile.bio && <p class="bio">{profile.bio}</p>}
+    <SocialLinks links={links} />
+  </div>
+</header>
+
+<style>
+  .profile {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-5);
+    padding-block: var(--space-7) var(--space-6);
+    text-align: center;
+  }
+
+  .avatar {
+    width: clamp(7rem, 26vw, 10rem);
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    background: var(--color-surface);
+  }
+
+  .intro {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    max-width: 40rem;
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .location {
+    color: var(--color-text-muted);
+  }
+
+  h1 {
+    font-size: clamp(2.75rem, 9vw, 5.5rem);
+    letter-spacing: -0.02em;
+  }
+
+  .bio {
+    font-size: clamp(1.0625rem, 2.2vw, 1.25rem);
+    color: var(--color-text-muted);
+    max-width: 34rem;
+  }
+
+  @media (min-width: 900px) {
+    .profile {
+      grid-template-columns: auto 1fr;
+      justify-items: start;
+      align-items: center;
+      gap: var(--space-7);
+      padding-block: var(--space-8) var(--space-7);
+      text-align: left;
+    }
+
+    .intro {
+      justify-items: start;
+    }
+  }
+</style>

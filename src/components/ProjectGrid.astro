@@ -1,0 +1,55 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+
+const { projects = [] } = Astro.props;
+// Featured projects first; otherwise keep the order from portfolio.js.
+const ordered = [...projects.filter((p) => p.featured), ...projects.filter((p) => !p.featured)];
+---
+
+{
+  ordered.length > 0 ? (
+    <ul class="grid">
+      {ordered.map((project, i) => (
+        <li>
+          <ProjectCard project={project} eager={i < 4} />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">Work coming soon.</p>
+  )
+}
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 360px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-7) var(--space-5);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .empty {
+    color: var(--color-text-muted);
+  }
+</style>
